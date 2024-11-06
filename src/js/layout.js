@@ -24,10 +24,11 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
+            <Route path="/demo" element={<Demo />} />
             <Route path="/" element={<Home />} />
             <Route path="/AgregarContacto" element={<AgregarContacto />} />
             <Route
-              path="/ActualizarContacto"
+              path="/ActualizarContacto/:id"
               element={<ActualizarContacto />}
             />
             <Route path="/single/:theid" element={<Single />} />

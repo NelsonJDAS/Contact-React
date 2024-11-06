@@ -1,12 +1,18 @@
-import React from "react";
 import "../../styles/home.css";
-import Agregar_Eliminar from "../component/Agregar-Actualizar.jsx";
+import Agregar_Actualizar from "../component/Agregar-Actualizar.jsx";
 import "../../styles/Agregar_Actualizar.css";
+import React, { useContext, useState, useEffect } from "react";
+import "../../styles/home.css";
+import { Context } from "../store/appContext";
 
 export const AgregarContacto = () => {
+  const { store, actions } = useContext(Context);
   return (
     <>
-      <Agregar_Eliminar agregar_actualizar="agregar" />
+      <Agregar_Actualizar
+        agregar_actualizar="agregar"
+        funcion={actions.CrearContacto}
+      />
     </>
   );
 };

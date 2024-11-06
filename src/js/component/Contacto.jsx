@@ -28,7 +28,7 @@ const Contacto = () => {
       </div>
       <div className="col-2 col-md-2 text-end mt-1">
         <div>
-          <Link to="/ActualizarContacto">
+          <Link to="/ActualizarContacto/43">
             <i class="fa-solid fa-pencil mx-md-2 text-success"></i>
           </Link>
           <i class="fa-regular fa-trash-can text-danger"></i>

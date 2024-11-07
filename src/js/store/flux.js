@@ -2,42 +2,13 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       contact: [],
-      demo: [
-        {
-          title: "FIRST",
-          background: "white",
-          initial: "white",
-        },
-        {
-          title: "SECOND",
-          background: "white",
-          initial: "white",
-        },
-      ],
     },
     actions: {
       // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
       loadSomeData: () => {
         /**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
-      },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
-
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
-
-        //reset the global store
-        setStore({ demo: demo });
       },
       CrearUsuario: () => {
         // const store = getStore();
@@ -54,18 +25,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           fetch(
             "https://playground.4geeks.com/contact/agendas/Usuario_Contact/contacts"
           )
-            .then((respuesta) => {
-              const datos = respuesta.json();
-              return datos;
-            })
+            .then((respuesta) => respuesta.json())
             .then((datos) => {
-              console.log(datos);
-              setStore({ contact: datos });
+              setStore({ contact: datos.contacts });
             });
         } catch (error) {}
       },
       ActualizarContacto: (ID, nombre, mail, telefono, ubicacion) => {
-        console.log(nombre, mail, telefono, ubicacion);
         const contactoActualizado = {
           name: nombre,
           phone: telefono,
@@ -81,6 +47,20 @@ const getState = ({ getStore, getActions, setStore }) => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(contactoActualizado),
+            }
+          );
+        } catch (error) {}
+      },
+
+      EliminarContacto: (ID) => {
+        try {
+          fetch(
+            `https://playground.4geeks.com/contact/agendas/Usuario_Contact/contacts/${ID}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
             }
           );
         } catch (error) {}

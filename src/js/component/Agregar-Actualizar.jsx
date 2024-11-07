@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/home.css";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+import { Toaster, toast } from "sonner";
 
 const Agregar_Actualizar = (props) => {
+  const [contacto, setContacto] = useState([]);
   const [nombre, setNombre] = useState("");
   const [mail, setMail] = useState("");
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
+  const { store, actions } = useContext(Context);
 
   const { id } = useParams();
+  useEffect(() => {
+    const contacto = store.contact.find((element) => {
+      if (element.id == id) {
+        setContacto(element);
+      }
+    });
+  });
 
   const agregar_actualizar =
-    props.agregar_actualizar === "agregar" ? "Add Contact" : "Update Contact";
+    props.agregar_actualizar === "agregar" ? "Add Contact" : "Edit Contact";
 
   const handleElementoName = (e) => {
     setNombre(e.target.value);
@@ -44,6 +56,9 @@ const Agregar_Actualizar = (props) => {
               Full Name
             </label>
             <input
+              placeholder={
+                agregar_actualizar === "agregar" ? "" : contacto.name
+              }
               type="text"
               class="form-control text-center"
               id="exampleInputName"
@@ -56,6 +71,9 @@ const Agregar_Actualizar = (props) => {
               Mail
             </label>
             <input
+              placeholder={
+                agregar_actualizar === "agregar" ? "" : contacto.email
+              }
               type="email"
               class="form-control text-center"
               id="exampleInputMail"
@@ -68,6 +86,9 @@ const Agregar_Actualizar = (props) => {
               Location
             </label>
             <input
+              placeholder={
+                agregar_actualizar === "agregar" ? "" : contacto.address
+              }
               type="text"
               class="form-control text-center"
               id="exampleInputLocation"
@@ -80,6 +101,9 @@ const Agregar_Actualizar = (props) => {
               Phone
             </label>
             <input
+              placeholder={
+                agregar_actualizar === "agregar" ? "" : contacto.phone
+              }
               type="number"
               class="form-control text-center"
               id="exampleInputName"
@@ -90,7 +114,9 @@ const Agregar_Actualizar = (props) => {
           <button
             type="submit"
             class={
-              props.agregar_actualizar === "agregar"
+              nombre === "" || mail === "" || phone === "" || location === ""
+                ? "btn btn-warning w-100 fw-bold disabled"
+                : props.agregar_actualizar === "agregar"
                 ? "btn btn-primary w-100 fw-bold"
                 : "btn btn-success w-100 fw-bold"
             }
@@ -104,6 +130,10 @@ const Agregar_Actualizar = (props) => {
           </button>
         </form>
       </div>
+      <Link to={"/"} className="text-decoration-none fw-bold p-0 m-0 text-dark">
+        <p>volver al home</p>
+      </Link>
+      <Toaster />
     </div>
   );
 };

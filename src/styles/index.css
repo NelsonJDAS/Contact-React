@@ -1,3 +1,7 @@
-/* 
-    General Styles
-*/
+nav {
+  background-image: linear-gradient(to bottom, #add8e6, white);
+}
+
+footer {
+  background-image: linear-gradient(to bottom, #add8e6, white);
+}

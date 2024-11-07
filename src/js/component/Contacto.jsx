@@ -1,40 +1,121 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
-const Contacto = () => {
+const Contacto = (props) => {
+  const [contacto, setContacto] = useState([]);
+  const [d_none, setD_none] = useState(false);
+  const { store, actions } = useContext(Context);
   return (
-    <div className="row mx-1 mb-1 container-contact rounded-3 py-2">
-      <div className="col-3 col-md-2">
-        <img
-          src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png"
-          alt=""
-          className="img-fluid rounded-circle "
-        />
-      </div>
-      <div className="col-7 col-md-8 text-center m-0 p-0">
-        <div className="d-flex flex-column">
-          <span>
-            <i class="fa-solid fa-location-dot mx-md-3"></i>
-            Venezuela,caracas,chacao
-          </span>
-          <span>
-            <i class="fa-solid fa-phone mx-md-3"></i>+55-2949-234
-          </span>
-          <span>
-            <i class="fa-regular fa-envelope mx-md-3"></i>
-            Ejmeplodeprueba@gmail.com
-          </span>
+    <>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">
+                Seguro que quieres eliminar al contacto
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body d-flex flex-column">
+              <p>
+                Importante: No podras recuperar el contacto una vez eliminado
+              </p>
+              <p className="fw-bold text-dark"> Nombre</p>
+              <span>
+                <i class="fa-solid fa-location-dot mx-md-3 px-3"></i>
+                Ubicacion
+              </span>
+              <span>
+                <i class="fa-solid fa-phone mx-md-3 px-3"></i>
+                Movil
+              </span>
+              <span>
+                <i class="fa-regular fa-envelope mx-md-3 px-3"></i>
+                Correo
+              </span>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-success w-100"
+                data-bs-dismiss="modal"
+                onClick={() => {
+                  setD_none(true);
+                  console.log(d_none);
+                  actions.EliminarContacto(props.id);
+                }}
+              >
+                Si, Estoy seguro
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="col-2 col-md-2 text-end mt-1">
-        <div>
-          <Link to="/ActualizarContacto/43">
-            <i class="fa-solid fa-pencil mx-md-2 text-success"></i>
-          </Link>
-          <i class="fa-regular fa-trash-can text-danger"></i>
+      <div
+        className={
+          d_none === false
+            ? "row mx-1 mb-1 container-contact rounded-3 py-2 bg-white"
+            : "d-none"
+        }
+      >
+        <div className="col-3 col-md-2">
+          <img
+            src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png"
+            alt=""
+            className="img-fluid rounded-circle "
+          />
+        </div>
+        <div className="col-7 col-md-8 m-0 p-0">
+          <div className="d-flex flex-column fw-bold">
+            <h5 className="text-center">{props.nombre}</h5>
+            <span>
+              <i class="fa-solid fa-location-dot mx-md-3 px-3"></i>
+              {props.ubicacion}
+            </span>
+            <span>
+              <i class="fa-solid fa-phone mx-md-3 px-3"></i>
+              {props.telefono}
+            </span>
+            <span>
+              <i class="fa-regular fa-envelope mx-md-3 px-3"></i>
+              {props.mail}
+            </span>
+          </div>
+        </div>
+        <div className="col-2 col-md-2 text-end mt-1">
+          <div>
+            <Link to={`/ActualizarContacto/${props.id}`}>
+              <i class="fa-solid fa-pencil mx-md-2 text-success"></i>
+            </Link>
+            <i
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              class="fa-regular fa-trash-can text-danger cursor"
+              onClick={() => {
+                setContacto({
+                  nombre: props.nombre,
+                  ubicacion: props.ubicacion,
+                  telefono: props.telefono,
+                  mail: props.mail,
+                });
+              }}
+            ></i>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

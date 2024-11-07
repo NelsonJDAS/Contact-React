@@ -26,3 +26,17 @@
 .container-contact {
   border: 2px solid black;
 }
+
+.cursor:hover {
+  cursor: pointer;
+}
+
+.fondo {
+  background-image: linear-gradient(to bottom, #f2ffff, white);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container-btn {
+  background-color: white;
+}

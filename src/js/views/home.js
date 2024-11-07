@@ -1,18 +1,11 @@
 import React, { useEffect } from "react";
 import "../../styles/home.css";
-import ListaContactos from "../component/ListaContactos.jsx";
+import BtnYListaContactos from "../component/BtnYListaContactos.jsx";
 
 export const Home = () => {
-  useEffect(() => {
-    try {
-      actions.CrearUsuario();
-    } catch (error) {
-      console.log("Usuario ya creado");
-    }
-  }, []);
   return (
     <div>
-      <ListaContactos />
+      <BtnYListaContactos />
     </div>
   );
 };

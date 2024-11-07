@@ -7,7 +7,7 @@ import { Toaster, toast } from "sonner";
 
 const Agregar_Actualizar = (props) => {
   const [contacto, setContacto] = useState([]);
-  const [nombre, setNombre] = useState("");
+  const [nombre, setNombre] = useState();
   const [mail, setMail] = useState("");
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
@@ -18,9 +18,13 @@ const Agregar_Actualizar = (props) => {
     const contacto = store.contact.find((element) => {
       if (element.id == id) {
         setContacto(element);
+        setNombre(element.name);
+        setMail(element.email);
+        setLocation(element.address);
+        setPhone(element.phone);
       }
     });
-  });
+  }, []);
 
   const agregar_actualizar =
     props.agregar_actualizar === "agregar" ? "Add Contact" : "Edit Contact";
@@ -56,9 +60,7 @@ const Agregar_Actualizar = (props) => {
               Full Name
             </label>
             <input
-              placeholder={
-                agregar_actualizar === "agregar" ? "" : contacto.name
-              }
+              value={nombre}
               type="text"
               class="form-control text-center"
               id="exampleInputName"
@@ -71,9 +73,7 @@ const Agregar_Actualizar = (props) => {
               Mail
             </label>
             <input
-              placeholder={
-                agregar_actualizar === "agregar" ? "" : contacto.email
-              }
+              value={mail}
               type="email"
               class="form-control text-center"
               id="exampleInputMail"
@@ -86,9 +86,7 @@ const Agregar_Actualizar = (props) => {
               Location
             </label>
             <input
-              placeholder={
-                agregar_actualizar === "agregar" ? "" : contacto.address
-              }
+              value={location}
               type="text"
               class="form-control text-center"
               id="exampleInputLocation"
@@ -101,9 +99,7 @@ const Agregar_Actualizar = (props) => {
               Phone
             </label>
             <input
-              placeholder={
-                agregar_actualizar === "agregar" ? "" : contacto.phone
-              }
+              value={phone}
               type="number"
               class="form-control text-center"
               id="exampleInputName"
@@ -124,6 +120,7 @@ const Agregar_Actualizar = (props) => {
               props.agregar_actualizar === "agregar"
                 ? props.funcion(nombre, mail, phone, location)
                 : props.funcion(id, nombre, mail, phone, location);
+              actions.ConseguirTodasLasAgendas();
             }}
           >
             Done!

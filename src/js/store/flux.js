@@ -53,6 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       EliminarContacto: (ID) => {
+        console.log(ID);
         try {
           fetch(
             `https://playground.4geeks.com/contact/agendas/Usuario_Contact/contacts/${ID}`,
@@ -65,8 +66,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
         } catch (error) {}
       },
-      CrearContacto: (nombre, mail, telefono, ubicacion) => {
-        const contacto = {
+      CrearContacto: async (nombre, mail, telefono, ubicacion) => {
+        const contacto = await {
           name: nombre,
           phone: telefono,
           email: mail,
@@ -74,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         try {
-          fetch(
+          await fetch(
             "https://playground.4geeks.com/contact/agendas/Usuario_Contact/contacts",
             {
               method: "POST",

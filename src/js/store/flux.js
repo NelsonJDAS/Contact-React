@@ -1,45 +1,93 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
+  return {
+    store: {
+      contact: [],
+    },
+    actions: {
+      // Use getActions to call a function within a fuction
+      loadSomeData: () => {
+        /**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+      },
+      CrearUsuario: () => {
+        // const store = getStore();
+        const respuesta = fetch(
+          "https://playground.4geeks.com/contact/agendas/Usuario_Contact",
+          {
+            method: "POST",
+          }
+        );
+      },
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+      ConseguirTodasLasAgendas: () => {
+        try {
+          fetch(
+            "https://playground.4geeks.com/contact/agendas/Usuario_Contact/contacts"
+          )
+            .then((respuesta) => respuesta.json())
+            .then((datos) => {
+              setStore({ contact: datos.contacts });
+            });
+        } catch (error) {}
+      },
+      ActualizarContacto: (ID, nombre, mail, telefono, ubicacion) => {
+        const contactoActualizado = {
+          name: nombre,
+          phone: telefono,
+          email: mail,
+          address: ubicacion,
+        };
+        try {
+          fetch(
+            `https://playground.4geeks.com/contact/agendas/Usuario_Contact/contacts/${ID}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(contactoActualizado),
+            }
+          );
+        } catch (error) {}
+      },
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+      EliminarContacto: (ID) => {
+        try {
+          fetch(
+            `https://playground.4geeks.com/contact/agendas/Usuario_Contact/contacts/${ID}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        } catch (error) {}
+      },
+      CrearContacto: (nombre, mail, telefono, ubicacion) => {
+        const contacto = {
+          name: nombre,
+          phone: telefono,
+          email: mail,
+          address: ubicacion,
+        };
+
+        try {
+          fetch(
+            "https://playground.4geeks.com/contact/agendas/Usuario_Contact/contacts",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(contacto),
+            }
+          );
+        } catch (error) {}
+      },
+    },
+  };
 };
 
 export default getState;

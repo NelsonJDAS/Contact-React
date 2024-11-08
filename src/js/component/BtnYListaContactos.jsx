@@ -22,7 +22,7 @@ const BtnYListaContactos = () => {
               </Link>
             </div>
           </div>
-          <div className="col-lg-6 col-12 container-contacts">
+          <div className="col-lg-6 col-12 container-contacts pt-3">
             <div className="d-flex flex-column mx-lg-3">
               {store.contact.map((elem) => {
                 return (

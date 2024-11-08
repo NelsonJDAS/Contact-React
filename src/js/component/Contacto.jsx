@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 
 const Contacto = (props) => {
   const [contacto, setContacto] = useState([]);
-  const [d_none, setD_none] = useState(false);
+  const [Delete, setDelete] = useState(false);
   const { store, actions } = useContext(Context);
   return (
     <>
@@ -52,9 +52,8 @@ const Contacto = (props) => {
                 class="btn btn-success w-100"
                 data-bs-dismiss="modal"
                 onClick={() => {
-                  setD_none(true);
-                  console.log(d_none);
-                  actions.EliminarContacto(props.id);
+                  setDelete(true);
+                  actions.ConseguirTodasLasAgendas();
                 }}
               >
                 Si, Estoy seguro
@@ -63,13 +62,7 @@ const Contacto = (props) => {
           </div>
         </div>
       </div>
-      <div
-        className={
-          d_none === false
-            ? "row mx-1 mb-1 container-contact rounded-3 py-2 bg-white"
-            : "d-none"
-        }
-      >
+      <div className="row mx-1 container-contact rounded-3 py-2 bg-white contacto">
         <div className="col-3 col-md-2">
           <img
             src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png"
@@ -110,6 +103,8 @@ const Contacto = (props) => {
                   telefono: props.telefono,
                   mail: props.mail,
                 });
+
+                Delete === true ? "" : actions.EliminarContacto(props.id);
               }}
             ></i>
           </div>
